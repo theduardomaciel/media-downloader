@@ -8,7 +8,7 @@ Certifique-se de ter os seguintes itens instalados em seu sistema:
 
 -   Python 3.x
 -   Biblioteca `pytube` (instalável via `pip install pytube`)
--   ffmpeg (executável)
+-   ffmpeg.exe (disponível em https://github.com/BtbN/FFmpeg-Builds/releases)
 
 ## Instalação
 
@@ -48,7 +48,7 @@ Bem-vindo ao YouTube Downloader!
 🔗 Insira o link do vídeo que você deseja baixar: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 🔄 Obtendo dados do vídeo...
-🎬 O vídeo Never Gonna Give You Up tem 3:32 de duração e está disponível nas seguintes qualidades:
+🎬 O vídeo tem 3:32 de duração e está disponível nas seguintes qualidades:
 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 🎞️ Qualidades de vídeo disponíveis:
 [0] - 1080p (78.66MB)
