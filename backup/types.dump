@@ -1,0 +1,166 @@
+export interface Video {
+    id: string;
+    title: string;
+    formats?: (FormatsEntity)[] | null;
+    thumbnails?: (ThumbnailsEntity)[] | null;
+    thumbnail: string;
+    description: string;
+    channel_id: string;
+    channel_url: string;
+    duration: number;
+    view_count: number;
+    average_rating?: null;
+    age_limit: number;
+    webpage_url: string;
+    categories?: (string)[] | null;
+    tags?: (string)[] | null;
+    playable_in_embed: boolean;
+    live_status: string;
+    release_timestamp?: null;
+    _format_sort_fields?: (string)[] | null;
+    automatic_captions: AutomaticCaptions;
+    subtitles: Subtitles;
+    start_time: number;
+    comment_count: number;
+    chapters?: null;
+    heatmap?: null;
+    like_count: number;
+    channel: string;
+    channel_follower_count: number;
+    channel_is_verified: boolean;
+    uploader: string;
+    uploader_id: string;
+    uploader_url: string;
+    upload_date: string;
+    availability: string;
+    original_url: string;
+    webpage_url_basename: string;
+    webpage_url_domain: string;
+    extractor: string;
+    extractor_key: string;
+    playlist?: null;
+    playlist_index?: null;
+    display_id: string;
+    fulltitle: string;
+    duration_string: string;
+    release_year?: null;
+    is_live: boolean;
+    was_live: boolean;
+    requested_subtitles?: null;
+    _has_drm?: null;
+    epoch: number;
+    format_id: string;
+    ext: string;
+    requested_formats?: (RequestedFormatsEntity)[] | null;
+    protocol: string;
+    _type: string;
+    _version: Version;
+  }
+  export interface FormatsEntity {
+    format_id: string;
+    format_note?: string | null;
+    ext: string;
+    protocol: string;
+    acodec?: string | null;
+    vcodec: string;
+    url: string;
+    width?: number | null;
+    height?: number | null;
+    fps?: number | null;
+    rows?: number | null;
+    columns?: number | null;
+    fragments?: (FragmentsEntity)[] | null;
+    resolution: string;
+    aspect_ratio?: number | null;
+    http_headers: HttpHeaders;
+    audio_ext: string;
+    video_ext: string;
+    vbr?: number | null;
+    abr?: number | null;
+    tbr?: number | null;
+    format: string;
+    format_index?: null;
+    manifest_url?: string | null;
+    language?: string | null;
+    preference?: null;
+    quality?: number | null;
+    has_drm?: boolean | null;
+    source_preference?: number | null;
+    asr?: number | null;
+    filesize?: number | null;
+    audio_channels?: number | null;
+    language_preference?: number | null;
+    dynamic_range?: string | null;
+    container?: string | null;
+    downloader_options?: DownloaderOptions | null;
+    filesize_approx?: number | null;
+  }
+  export interface FragmentsEntity {
+    url: string;
+    duration: number;
+  }
+  
+  export interface HttpHeaders {
+    User-Agent: string;
+    Accept: string;
+    Accept-Language: string;
+    Sec-Fetch-Mode: string;
+  }
+
+  export interface DownloaderOptions {
+    http_chunk_size: number;
+  }
+  export interface ThumbnailsEntity {
+    url: string;
+    preference: number;
+    id: string;
+    height?: number | null;
+    width?: number | null;
+    resolution?: string | null;
+  }
+ 
+  export interface Subtitles {
+  }
+  export interface RequestedFormatsEntity {
+    asr?: number | null;
+    filesize: number;
+    format_id: string;
+    format_note: string;
+    source_preference: number;
+    fps?: number | null;
+    audio_channels?: number | null;
+    height?: number | null;
+    quality: number;
+    has_drm: boolean;
+    tbr: number;
+    url: string;
+    width?: number | null;
+    language?: string | null;
+    language_preference: number;
+    preference?: null;
+    ext: string;
+    vcodec: string;
+    acodec: string;
+    dynamic_range?: string | null;
+    container: string;
+    downloader_options: DownloaderOptions1;
+    protocol: string;
+    resolution: string;
+    aspect_ratio?: number | null;
+    http_headers: HttpHeaders;
+    video_ext: string;
+    audio_ext: string;
+    abr: number;
+    vbr: number;
+    format: string;
+  }
+  export interface DownloaderOptions1 {
+    http_chunk_size: number;
+  }
+  export interface Version {
+    version: string;
+    current_git_head?: null;
+    release_git_head: string;
+    repository: string;
+  }
+  

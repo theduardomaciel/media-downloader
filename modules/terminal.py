@@ -1,6 +1,6 @@
 import os
 
-class srt_deco:
+class str_deco:
     PURPLE = '\033[95m'
     CYAN = '\033[96m'
     DARK_CYAN = '\033[36m'
@@ -32,7 +32,7 @@ def print_intro():
 
 def print_cancel():
     print()
-    print(f"{srt_deco.RED}❌ Download cancelado pelo usuário.{srt_deco.END}")
+    print(f"{str_deco.RED}❌ Download cancelado pelo usuário.{str_deco.END}")
     exit()
 
 def print_success(title: str, file_type: str, path: str):
