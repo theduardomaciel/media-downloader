@@ -1,4 +1,4 @@
-from terminal import terminal
+from . import terminal
 
 def get_resolution_and_size_string(index, stream):
     return f"[{index}] - {stream.resolution} ({stream.filesize / 1000000:.2f}MB)"
@@ -28,7 +28,7 @@ def show_video_options(info):
     print(" ")
 
     print(
-        terminal.str_deco.BOLD + "🎞️  Qualidades de vídeo disponíveis para download:" + terminal.str_deco.END
+        terminal.str_deco.BOLD + "🎞️  Qualidades de vídeo disponíveis para download:" + terminal.srt_deco.END
     )
     print(" ")
 
