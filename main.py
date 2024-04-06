@@ -8,49 +8,53 @@ from yt_dlp.utils import download_range_func
 import modules.terminal as terminal
 import modules.media as media
 
-# terminal.print_intro()
-
 # Configurações
 config = configparser.ConfigParser(os.environ)
 config.read("config.ini")
 
-file_type = config["DOWNLOAD"]["default_filetype"]
-is_video_audio_enabled = config["DOWNLOAD"]["disable_video_audio"] != "True"
 show_logs = config["DOWNLOAD"]["show_logs"] == "True"
 time_from = config["VIDEO"]["time_from"]
 time_to = config["VIDEO"]["time_to"]
 
-URLS = config['DOWNLOAD']['urls'].split('\n')
-if len(URLS) == 1 and URLS[0] == '':
-    URLS = []
-    try:
-        while True:
-            if len(URLS) > 1:
-                if URLS[len(URLS) - 1] == URLS[len(URLS) - 2]:
-                    URLS.pop()
-                    print("URL já adicionada.")
-                else:
-                    print("URLs adicionadas:")
-                    for URL in URLS:
-                        print(URL)
-                    print("")
+def get_urls():
+    URLS = config['DOWNLOAD']['urls'].split('\n')
+    if len(URLS) == 1 and URLS[0] == '':
+        URLS = []
+        try:
+            while True:
+                if len(URLS) > 1:
+                    if URLS[len(URLS) - 1] == URLS[len(URLS) - 2]:
+                        URLS.pop()
+                        print("URL já adicionada.")
+                    else:
+                        print("URLs adicionadas:")
+                        for URL in URLS:
+                            print(URL)
+                        print("")
 
-            URL = input(f"{terminal.str_deco.BOLD}Digite a URL do vídeo que deseja baixar{terminal.str_deco.END} (ou 'r' para remover a anterior, 'q' para terminar): ")
+                URL = input(f"{terminal.str_deco.BOLD}Digite a URL do vídeo que deseja baixar{terminal.str_deco.END} (ou 'r' para remover a anterior, 'q' para terminar): ")
 
-            if URL == 'q':
-                break
+                if URL == 'q':
+                    break
 
-            if URL == 'r':
-                if len(URLS) > 0:
-                    URLS.pop()
-                    print(f"{terminal.str_deco.RED}Última URL removida.{terminal.str_deco.END}")
-                else:
-                    print("Nenhuma URL adicionada.")
+                if URL == 'r':
+                    if len(URLS) > 0:
+                        URLS.pop()
+                        print(f"{terminal.str_deco.RED}Última URL removida.{terminal.str_deco.END}")
+                    else:
+                        print("Nenhuma URL adicionada.")
 
-            URLS.append(URL)
-    except KeyboardInterrupt:
-        terminal.print_cancel()
-        exit()
+                URLS.append(URL)
+        except KeyboardInterrupt:
+            terminal.print_cancel()
+            exit()
+    else:
+        print("URLs obtidas do arquivo de configuração:")
+        for URL in URLS:
+            print(URL)
+        print("")
+
+    return URLS
 
 """ 
 ffmpeg = (
@@ -183,19 +187,28 @@ teste = {
 
 # Funções
 def main():
+    terminal.print_intro()
+    URLS = get_urls()
+
     with YoutubeDL(ydl_opts) as ytdl:
+        print(f"{terminal.str_deco.BOLD}{terminal.str_deco.BLUE}ℹ️ Baixando informações dos vídeos...{terminal.str_deco.END}")
         for URL in URLS:
             info = ytdl.extract_info(URL, download=False)
             
             sanitized_info = ytdl.sanitize_info(info)
             #print(json.dumps(sanitized_info, indent=4))
             #print(json.dumps(sanitized_info['requested_formats'], indent=4))
+
+            file_type = config["DOWNLOAD"]["default_filetype"] or "video"
+            show_all_codecs = config["VIDEO"]["show_all_codecs"] == "True"
+            is_video_audio_enabled = config["DOWNLOAD"]["disable_video_audio"] != "True"
             
-            # Exibimos as qualidades de vídeo disponíveis para o usuário escolher
-            media.show_video_options(sanitized_info)
+            # Exibimos as qualidades de mídia disponíveis para o usuário escolher
+            stream = media.request_media_quality(sanitized_info, file_type, show_all_codecs, is_video_audio_enabled)
 
-    # show_video_options()
-
+            # Baixamos o vídeo
+            print(f"{terminal.str_deco.BOLD}{terminal.str_deco.BLUE}ℹ️ Baixando vídeo...{terminal.str_deco.END}")
+            ytdl.download([URL])
 
 if __name__ == "__main__":
     main()
