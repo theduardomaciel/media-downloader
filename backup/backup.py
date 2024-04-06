@@ -1,88 +1,4 @@
-import os
-
-import configparser
-
-config = configparser.ConfigParser(os.environ)
-config.read("config.ini")
-
-class str_deco:
-    PURPLE = '\033[95m'
-    CYAN = '\033[96m'
-    DARK_CYAN = '\033[36m'
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    END = '\033[0m'
-
-def print_line():
-    print(
-        "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
-    )
-
-
-def print_cancel():
-    print("")
-    print(str_deco.RED + "❌ Download cancelado pelo usuário." + str_deco.END)
-    exit()
-
-
-def print_success(title):
-    print(
-        str_deco.GREEN + f"✅ O {get_file_type_str(file_type)} {title} foi baixado com sucesso e está disponível em:" + str_deco.END,
-        f'"{config["download"]["default_path"]}"',
-    )
-    clear_terminal()
-    exit()
-
-def clear_terminal():
-    os.system("cls" if os.name == "nt" else "clear")
-
-intro_str = """ __   __  _______  __   __  _______  __   __  _______  _______    ______   _______  _     _  __    _  ___      _______  _______  ______   _______  ______   
-|  | |  ||       ||  | |  ||       ||  | |  ||  _    ||       |  |      | |       || | _ | ||  |  | ||   |    |       ||   _   ||      | |       ||    _ |  
-|  |_|  ||   _   ||  | |  ||_     _||  | |  || |_|   ||    ___|  |  _    ||   _   || || || ||   |_| ||   |    |   _   ||  |_|  ||  _    ||    ___||   | ||  
-|       ||  | |  ||  |_|  |  |   |  |  |_|  ||       ||   |___   | | |   ||  | |  ||       ||       ||   |    |  | |  ||       || | |   ||   |___ |   |_||_ 
-|_     _||  |_|  ||       |  |   |  |       ||  _   | |    ___|  | |_|   ||  |_|  ||       ||  _    ||   |___ |  |_|  ||       || |_|   ||    ___||    __  |
-  |   |  |       ||       |  |   |  |       || |_|   ||   |___   |       ||       ||   _   || | |   ||       ||       ||   _   ||       ||   |___ |   |  | |
-  |___|  |_______||_______|  |___|  |_______||_______||_______|  |______| |_______||__| |__||_|  |__||_______||_______||__| |__||______| |_______||___|  |_|"""
-
-print(intro_str)
-print("")
-print('⚙️  As configurações podem ser alteradas no arquivo: "config.ini"')
-print_line()
-
-from pytube import YouTube
-from pytube.exceptions import VideoUnavailable
-from pytube.helpers import safe_filename
-
-file_type = config["download"]["default_filetype"]
-
-def progress_func(stream, chunk, bytes_remaining):
-    total_size = stream.filesize
-    bytes_downloaded = total_size - bytes_remaining
-
-    percentage = round(bytes_downloaded / total_size * 100, 2)
-
-    print(
-        "█" * round(bytes_downloaded / total_size * 20)
-        + "░" * (20 - round(bytes_downloaded / total_size * 20)),
-        f"{percentage}%",
-        end="\r",
-    )
-
-    # print("{:00.0f}% downloaded".format(bytes_downloaded / total_size * 100))
-
-
-import ffmpeg
-
-is_video_audio_download_enabled = True
-
-def get_file_type_str(file_type):
-    return file_type == "video" and "vídeo" or "áudio"
-
-def complete_func(stream, file_path):
+def merge(stream, file_path):
     output_path = config["download"]["default_path"] + "/" + stream.default_filename
 
     if (
@@ -127,7 +43,7 @@ def complete_func(stream, file_path):
             and stream.is_progressive == False
             and is_video_audio_download_enabled
         ):
-            # print("Baixando áudio do vídeo separadamente...")
+            print("ℹ️ Baixando áudio do vídeo separadamente...")
             audio_stream = (
                 yt.streams.filter(only_audio=True, mime_type="audio/mp4")
                 .order_by("abr")
@@ -164,6 +80,7 @@ yt = get_youtube()
 
 clear_terminal()
 print(str_deco.DARK_CYAN + str_deco.BOLD + "🔄 Obtendo dados do vídeo..." + str_deco.END)
+print_line()
 
 mp4_streams = (
     yt.streams.filter(file_extension="mp4", only_video=True)

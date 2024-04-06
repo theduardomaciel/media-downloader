@@ -1,2 +1,9 @@
-/.vscode
-/ffmpeg.exe
+# VSCode
+.vscode/
+
+# Python
+env/
+/__pycache__/
+
+# Others
+packages/

@@ -1,32 +1,48 @@
-# YouTube Video Downloader
+# Media Downloader
 
-Este é um programa em Python que permite baixar vídeos do YouTube. Ele oferece a opção de escolher entre diferentes qualidades de vídeo e também permite baixar apenas o áudio.
+Este é um programa em Python que permite baixar áudios e vídeos de diversas plataformas. Ele oferece a opção de escolher entre diferentes qualidades de vídeo e também permite baixar apenas o áudio.
 
-## Pré-requisitos
+## 📚 Dependências
 
 Certifique-se de ter os seguintes itens instalados em seu sistema:
 
--   Python 3.x
--   Biblioteca `pytube` (instalável via `pip install pytube`)
--   ffmpeg.exe (disponível em https://github.com/BtbN/FFmpeg-Builds/releases)
+- Python 3.3 ou superior
+- ffmpeg.exe (disponível em https://github.com/BtbN/FFmpeg-Builds/releases)
 
-## Instalação
+## 📂 Instalação
 
 1. Clone este repositório ou faça o download dos arquivos em formato ZIP.
 
 2. Navegue até o diretório do projeto.
 
-3. Instale as dependências necessárias executando o seguinte comando:
+3. Crie um ambiente virtual para a instalação das dependências.
 
-    ```shell
-    pip install pytube
-    ```
+   ```shell
+   python3 -m venv env
+   ```
 
-4. Insira o executável do ffmpeg `(ffmpeg.exe)` na raiz do projeto.
+4. Em seguida, ative-o com base no sistema operacional atual.
 
-## Uso
+   | Platform | Shell      | Command                               |
+   | -------- | ---------- | ------------------------------------- |
+   | POSIX    | bash/zsh   | `source <venv>/bin/activate`          |
+   | POSIX    | fish       | `source <venv>/bin/activate.fish`     |
+   | POSIX    | csh/tcsh   | `source <venv>/bin/activate.csh`      |
+   | POSIX    | Powershell | `<venv>/bin/Activate.ps1`             |
+   | Windows  | cmd.exe    | `C:\> <venv>\Scripts\activate.bat`    |
+   | Windows  | Powershell | `PS C:\> <venv>\Scripts\Activate.ps1` |
 
-1. Execute o script `youtube_downloader.py`.
+5. Instale as dependências necessárias executando o seguinte comando:
+
+   ```shell
+   pip install -r requirements.txt
+   ```
+
+6. Insira o executável do ffmpeg `(ffmpeg.exe)` na raiz do projeto.
+
+## 🔧 Uso
+
+1. Execute o script `main.py`.
 
 2. Você será solicitado a fornecer o URL do vídeo do YouTube que deseja baixar.
 
